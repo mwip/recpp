@@ -1,7 +1,7 @@
 # recpp
-A digital cookbook for managing your recipes. Written in C++.
+A digital cookbook for managing your recipes. Written in C++ and Qt.
 ---
-The aim of this project is to create a digital cookbook application written in C++. 
+The aim of this project is to create a digital cookbook application written in C++ and Qt. 
 Main features will include search by Name, Ingredients, Comments, Cuisine or type of dish and a possibilty to blacklist certain ingredients (e.g. tomatoes, lactose etc.) which will allow you finding the right dinner for your allergic friends. 
 
 Implemented features: 
