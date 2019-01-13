@@ -14,6 +14,8 @@ Planned features:
 - search by type
 - search by comments
 - blacklist for search (e.g. ingredients)
+- print nice PDF
+- export to html
 
 Possible future features: 
 - import from websites (e.g. chefkoch.de, etc.)
