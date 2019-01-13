@@ -45,13 +45,16 @@ void recpp::on_actionNew_Cookbook_triggered()
     QString name = "";
     QString description = "";
     QString comment = "";
-    QString fileName = QFileDialog::getSaveFileName(this, "Create Cookbook",
-                                                    "", tr("Cookbook *.recpp, *.rectxt, *.recdb"));
+    QString fileName = QFileDialog::getSaveFileName(this, "Create Cookbook", "",
+                                                    tr("Cookbook *.recpp, *.rectxt, *.recdb"));
 
     // check and append correct file ending if needed
     QFileInfo fi(fileName);
-    if (fi.suffix() != "recpp") fileName += ".recpp";
-    qDebug() << fileName << "\n";
+    if (fi.suffix() != "recpp" | fi.suffix() != "recdb" |
+            fi.suffix() != "rectxt") {
+        fileName += ".recpp";
+    }
+    //qDebug() << fileName << "\n";
 
     Cookbook *cookbook = new Cookbook(name, description, comment, fileName);
 }

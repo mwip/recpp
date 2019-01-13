@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <sqlite3.h>
 #include <recipe.h>
+#include <vector>
 
 /*
     Structure of one Cookbook:
@@ -45,76 +46,46 @@ private:
     QString comment;
     QString fileName;
     int numberOfRecipes;
-    Recipe *recipes[];
+    std::vector<Recipe*> recipes;
 
 public:
+    // Constructors / Destructors
     Cookbook();
     Cookbook(QString name, QString description, QString comment,
              QString fileName);
     Cookbook(QString fileName);
-    std::string getName();
     ~Cookbook();
 
-    // write methods
-    void WriteRecppToRecpp(QString fileName);
-//    void WriteRecppToDB(QString fileName);
-//    void WriteRecppToTxt(QString fileName);
+    // Getters
+    QString getName();
+    QString getDescription();
+    QString getComment();
+    QString getFileName();
+    int getNumOfRecipes();
+
+    // Setters
+    void setName(QString n);
+    void setDescription(QString d);
+    void setComment(QString c);
+    void setFileName(QString f);
+    void updateNumberOfRecipes();
 
     // Read methods
 //    void ReadRecppFromRecpp(QString fileName); //void might be inappropriate
 //    void ReadRecppFromDB(QString fileName); //void might be inappropriate
 //    void ReadRecppFromTxt(QString fileName); //void might be inappropriate
 
+
+    // write methods
+//    void WriteRecppToRecpp(QString fileName);
+//    void WriteRecppToDB(QString fileName);
+//    void WriteRecppToTxt(QString fileName);
+
+
     // add or remove recipe
 
 };
 
-Cookbook::Cookbook(){
-    this->name = "";
-    this->description = "";
-    this->comment = "";
-    this->fileName = "";
-    this->numberOfRecipes = 0;
-}
-
-Cookbook::Cookbook(QString name, QString description, QString comment,
-                   QString fileName){
-    this->name = name;
-    this->description = description;
-    this->comment = comment;
-    this->fileName = fileName;
-    this->numberOfRecipes = 0;
-
-    // if file exists, read; else write create empty cookbook file.
-
-}
-
-Cookbook::Cookbook(QString fileName){
-    this->fileName = fileName;
-
-    //Cookbook *tmp = new Cookbook();
-}
-
-Cookbook::~Cookbook(){
-}
-
-//void WriteRecppToRecpp(QString fileName){
-
-//}
-
-//void WriteRecppToDB(QString fileName){
-//    sqlite3 *db;
-//    int rc;
-//    std::string sql = "CREATE TABLE META("
-//            "";
-//    // open database
-//    rc = sqlite3_open(fileName, &db);
-//    sqlite3_exec(db, sql, NULL, NULL, NULL);
-//}
-
-//void WriteRecppToTxt(QString fileName){
-
-//}
 
 
 

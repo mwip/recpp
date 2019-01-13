@@ -16,51 +16,20 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>
 */
 
-#ifndef RECIPE_H
-#define RECIPE_H
+#ifndef INGREDIENTS_H
+#define INGREDIENTS_H
 
+#include <vector>
 #include <QString>
-
-/*
-    Structure of one Recipe:
-    |
-    |--Name
-    |--Comment
-    |--num Portions
-    |--Ingredients
-    |  |--Ingredient1
-    |  |   |--amount
-    |  |   |--what
-    |  |--Ingredient2
-    |     |--amount
-    |     |--what
-    |--Instructions
-    |--Rating
-    |--Difficulty
-    |--Preparation Time
-    |--Cuisine
-*/
-
-class Recipe {
+class Ingredients
+{
 private:
-    QString name;
-    QString description;
-    QString comment;
-
+    std::vector<float> amount;
+    std::vector<QString> ingredients;
 
 public:
-    // Constructors / Destructors
-    Recipe();
-    Recipe(QString n);
-    ~Recipe();
-
-    // Getters
-    QString getName();
-    QString getDescription;
-    QString getComment;
-
-    // Setters
-
+    Ingredients();
+    ~Ingredients();
 };
 
-#endif // RECIPE_H
+#endif // INGREDIENTS_H

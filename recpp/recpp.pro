@@ -36,12 +36,16 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        recpp.cpp
+        recpp.cpp \
+    cookbook.cpp \
+    recipe.cpp \
+    ingredients.cpp
 
 HEADERS += \
         recpp.h \
     cookbook.h \
-    recipe.h
+    recipe.h \
+    ingredients.h
 
 FORMS += \
         recpp.ui
