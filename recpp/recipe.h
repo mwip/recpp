@@ -1,0 +1,51 @@
+/*
+    recpp - A digital cookbook for managing your recipes.
+    Copyright (C) 2018 Matthias Weigand -- matthias.weigand[at]protonmail.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>
+*/
+
+#ifndef RECIPE_H
+#define RECIPE_H
+
+#include <QString>
+
+/*
+    Structure of one Recipe:
+    |
+    |--Name
+    |--Comment
+    |--num Portions
+    |--Ingredients
+    |  |--Ingredient1
+    |  |   |--amount
+    |  |   |--what
+    |  |--Ingredient2
+    |     |--amount
+    |     |--what
+    |--Instructions
+    |--Rating
+    |--Difficulty
+    |--Preparation Time
+    |--Cuisine
+*/
+
+class Recipe {
+private:
+    QString name;
+    QString description;
+    QString comment;
+};
+
+#endif // RECIPE_H
