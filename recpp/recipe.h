@@ -20,6 +20,7 @@
 #define RECIPE_H
 
 #include <QString>
+#include <ingredients.h>
 
 /*
     Structure of one Recipe:
@@ -46,6 +47,14 @@ private:
     QString name;
     QString description;
     QString comment;
+    int portions;
+    Ingredients ingredients;
+    QString instructions;
+    int rating;
+    int difficulty;
+    int preparationTime;
+    QString cuisine;
+
 
 
 public:
@@ -56,8 +65,16 @@ public:
 
     // Getters
     QString getName();
-    QString getDescription;
-    QString getComment;
+    QString getDescription();
+    QString getComment();
+    int getPortions();
+    Ingredients getIngredients();
+    QString getInstructions();
+    int getRating();
+    int getDifficulty();
+    int getPreparationTime();
+    QString getCuisine();
+
 
     // Setters
 

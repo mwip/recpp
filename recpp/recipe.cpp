@@ -17,3 +17,57 @@
 */
 
 #include <recipe.h>
+
+// Constructors
+Recipe::Recipe(){
+
+}
+
+// Destructors
+Recipe::~Recipe(){
+
+}
+
+// Getters
+QString Recipe::getName(){
+    return this->name;
+}
+
+QString Recipe::getDescription(){
+    return this->description;
+}
+
+QString Recipe::getComment(){
+    return this->comment;
+}
+
+int Recipe::getPortions(){
+    return this->portions;
+}
+
+Ingredients Recipe::getIngredients(){
+    return this->ingredients;
+}
+
+QString Recipe::getInstructions(){
+    return this->instructions;
+}
+
+int Recipe::getRating(){
+    return this->rating;
+}
+
+int Recipe::getDifficulty(){
+    return this->difficulty;
+}
+
+int Recipe::getPreparationTime(){
+    return this->preparationTime;
+}
+
+QString Recipe::getCuisine(){
+    return this->cuisine;
+}
+
+
+

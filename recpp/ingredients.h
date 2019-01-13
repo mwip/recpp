@@ -24,12 +24,19 @@
 class Ingredients
 {
 private:
-    std::vector<float> amount;
+    std::vector<float> amounts;
     std::vector<QString> ingredients;
 
 public:
     Ingredients();
     ~Ingredients();
+
+    // Getters
+    std::vector<float> getAmounts();
+    std::vector<QString> getIngredients();
+
+    // Setters
+    void addIngredient(float a, QString i);
 };
 
 #endif // INGREDIENTS_H

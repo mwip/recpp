@@ -18,11 +18,28 @@
 
 #include "ingredients.h"
 
+// Constructors
 Ingredients::Ingredients()
 {
 
 }
 
+// Destructors
 Ingredients::~Ingredients(){
 
+}
+
+// Getters
+std::vector<float> Ingredients::getAmounts(){
+    return this->amounts;
+}
+
+std::vector<QString> Ingredients::getIngredients(){
+    return this->ingredients;
+}
+
+// Setters
+void Ingredients::addIngredient(float a, QString i){
+    this->amounts.push_back(a);
+    this->ingredients.push_back(i);
 }
