@@ -30,8 +30,9 @@
     |--num Portions
     |--Ingredients
     |  |--Ingredient1
-    |  |   |--amount
-    |  |   |--what
+    |  |  |--amount
+    |  |  |--unit
+    |  |  |--what
     |  |--Ingredient2
     |     |--amount
     |     |--what
@@ -77,6 +78,7 @@ public:
 
 
     // Setters
+
 
 };
 

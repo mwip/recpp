@@ -25,6 +25,7 @@ class Ingredients
 {
 private:
     std::vector<float> amounts;
+    std::vector<QString> units;
     std::vector<QString> ingredients;
 
 public:
