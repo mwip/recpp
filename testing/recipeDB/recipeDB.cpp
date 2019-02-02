@@ -23,8 +23,8 @@
  * touch test.sqlite && rm test.sqlite && g++ recipeDB.cpp -l sqlite3 && ./a.out
  */
 
-
-
+#include <string>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sqlite3.h>
@@ -93,17 +93,38 @@ int main(){
 
 
     // read values from table
-    sql = "SELECT * FROM RECIPES";
+    //sql = "SELECT * FROM RECIPES";
 
-    rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+    //rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
 
-    if(rc != SQLITE_OK){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-    } else {
-        fprintf(stdout, "Values successfully read from table\n");
-        //fprintf(data);
+    //if(rc != SQLITE_OK){
+    //    fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    //    sqlite3_free(zErrMsg);
+    //} else {
+    //    fprintf(stdout, "Values successfully read from table\n");
+    //    //fprintf(data);
+    //}
+    
+    // rather use https://stackoverflow.com/a/31168999
+    sqlite3_stmt *stmt;
+    sql = "SELECT ID, NAME, COMMENT, INSTRUCTIONS, RATING, DIFFICULTY, PREPARATIONTIME, CUISINE FROM RECIPES;";
+    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "error: %s", sqlite3_errmsg(db));
+        return -1;
     }
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        int id           = sqlite3_column_int (stmt, 0);
+        const unsigned char *name = sqlite3_column_text(stmt, 1);
+	const unsigned char *comment = sqlite3_column_text(stmt, 2);
+	const unsigned char *instr = sqlite3_column_text(stmt, 3);
+        std::cout << "ID : " << id << ", Name : " << name << ", Instructions : " << instr << std::endl;
+    }
+    if (rc != SQLITE_DONE) {
+        fprintf(stderr, "error:%s ", sqlite3_errmsg(db));
+    }
+    sqlite3_finalize(stmt);
+
     sqlite3_close(db);
 
     return(0);
