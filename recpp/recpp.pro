@@ -39,13 +39,15 @@ SOURCES += \
         recpp.cpp \
         cookbook.cpp \
         recipe.cpp \
-        ingredients.cpp
+        ingredients.cpp \
+    include/dbinteraction.cpp
 
 HEADERS += \
         recpp.h \
         cookbook.h \
         recipe.h \
-        ingredients.h
+        ingredients.h \
+    include/dbinteraction.h
 
 FORMS += \
         recpp.ui \

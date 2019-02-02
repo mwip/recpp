@@ -20,9 +20,6 @@
 #define COOKBOOK_H
 
 #include <QString>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sqlite3.h>
 #include <recipe.h>
 #include <vector>
 
@@ -68,6 +65,7 @@ public:
     void setDescription(QString d);
     void setComment(QString c);
     void setFileName(QString f);
+    void setNumberOfRecipes(int n);
     void updateNumberOfRecipes();
 
     // load functions

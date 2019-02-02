@@ -87,9 +87,14 @@ void Cookbook::setFileName(QString f){
     this->fileName = f;
 }
 
+void Cookbook::setNumberOfRecipes(int n){
+    this->numberOfRecipes = n;
+}
+
 void Cookbook::updateNumberOfRecipes(){
     this->numberOfRecipes = int(recipes.size());
 }
+
 
 // load Functions
 void Cookbook::loadFromFile(QString fileName){
