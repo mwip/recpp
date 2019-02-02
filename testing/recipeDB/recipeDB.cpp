@@ -15,9 +15,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- *  Adapted from 
+ *  Adapted from
  *  https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
- * 
+ *
+ *
+ * test compile with:
+ * touch test.sqlite && rm test.sqlite && g++ recipeDB.cpp -l sqlite3 && ./a.out
  */
 
 
@@ -40,6 +43,7 @@ int main(){
     char *zErrMsg = 0;
     int rc;
     const char *sql;
+    const char* data = "Callback function called";
 
     rc = sqlite3_open("test.sqlite", &db);
 
@@ -52,26 +56,54 @@ int main(){
 
     // Create SQL statement
     sql = "CREATE TABLE RECIPES(" \
-          "ID INT PRIMARY KEY       NOT NULL," \
-          "NAME           TEXT      NOT NULL," \
-          "COMMENT        TEXT," \
-          "INGREDIENTS    TEXT," \ 
+          "ID INT PRIMARY  KEY       NOT NULL," \
+          "NAME            TEXT      NOT NULL," \
+          "COMMENT         TEXT," \
+          "INGREDIENTS     TEXT," \
           // to be denotet amnt1;unit1;what1;amt2;...
-          "INSTRUCTIONS   TEXT," \
-          "RATING         INTEGER," \
-          "DIFFICULTY     INTEGER," \
-          "PREPATAIONTIME INTEGER," \
-          "CUISINE        CHAR(50));";
+          "INSTRUCTIONS    TEXT," \
+          "RATING          INTEGER," \
+          "DIFFICULTY      INTEGER," \
+          "PREPARATIONTIME INTEGER," \
+          "CUISINE         CHAR(50));";
 
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
 
     if(rc != SQLITE_OK){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);        
+        sqlite3_free(zErrMsg);
     } else {
         fprintf(stdout, "Table created successfully\n");
     }
 
+    // Insert values into table
+    sql = "INSERT INTO RECIPES (ID, NAME, COMMENT, INGREDIENTS, INSTRUCTIONS, " \
+            "RATING, DIFFICULTY, PREPARATIONTIME, CUISINE)" \
+          "VALUES (0, 'Recipe1', 'A comment on the recipe', '1;kg;joy;2;liter;beer'," \
+            "'drink beer and have the joy', 5, 1, 10, 'Bavarian');";
+
+    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+
+    if(rc != SQLITE_OK){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Values successfully inserted into table\n");
+    }
+
+
+    // read values from table
+    sql = "SELECT * FROM RECIPES";
+
+    rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+
+    if(rc != SQLITE_OK){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Values successfully read from table\n");
+        //fprintf(data);
+    }
     sqlite3_close(db);
 
     return(0);
