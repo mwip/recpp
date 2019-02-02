@@ -63,6 +63,10 @@ void recpp::on_actionNew_Cookbook_triggered()
 
 void recpp::on_actionOpen_Cookbook_triggered()
 {
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Cookbook", "",
+                                                    tr("Cookbook *.recpp, *.rectxt, *.recdb"));
+    Cookbook *cookbook = new Cookbook;
+    cookbook->loadFromFile(fileName);
 
 }
 

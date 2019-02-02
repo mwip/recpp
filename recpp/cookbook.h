@@ -70,6 +70,9 @@ public:
     void setFileName(QString f);
     void updateNumberOfRecipes();
 
+    // load functions
+    void loadFromFile(QString fileName);
+
     // Read methods
 //    void ReadRecppFromRecpp(QString fileName); //void might be inappropriate
 //    void ReadRecppFromDB(QString fileName); //void might be inappropriate

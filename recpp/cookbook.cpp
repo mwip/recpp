@@ -91,6 +91,11 @@ void Cookbook::updateNumberOfRecipes(){
     this->numberOfRecipes = int(recipes.size());
 }
 
+// load Functions
+void Cookbook::loadFromFile(QString fileName){
+    this->fileName = fileName;
+
+}
 
 //void WriteRecppToRecpp(QString fileName){
 //
