@@ -48,7 +48,8 @@ HEADERS += \
         ingredients.h
 
 FORMS += \
-        recpp.ui
+        recpp.ui \
+    ui/about.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

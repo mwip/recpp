@@ -25,13 +25,29 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Fi&amp;le</string>
+     <string>Coo&amp;kbook</string>
     </property>
     <addaction name="actionNew_Cookbook"/>
     <addaction name="actionOpen_Cookbook"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuRecipe">
+    <property name="title">
+     <string>&amp;Recipe</string>
+    </property>
+    <addaction name="actionAdd_Recipe"/>
+    <addaction name="actionEdit_Recipe"/>
+    <addaction name="actionRemove_Recipe"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>Abo&amp;ut</string>
+    </property>
+    <addaction name="actionAbout_recpp"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuRecipe"/>
+   <addaction name="menuAbout"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -44,17 +60,37 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>&amp;Exit</string>
    </property>
   </action>
   <action name="actionNew_Cookbook">
    <property name="text">
-    <string>New Cookbook</string>
+    <string>&amp;New Cookbook</string>
    </property>
   </action>
   <action name="actionOpen_Cookbook">
    <property name="text">
-    <string>Open Cookbook</string>
+    <string>&amp;Open Cookbook</string>
+   </property>
+  </action>
+  <action name="actionAdd_Recipe">
+   <property name="text">
+    <string>Add Recipe</string>
+   </property>
+  </action>
+  <action name="actionRemove_Recipe">
+   <property name="text">
+    <string>Remove Recipe</string>
+   </property>
+  </action>
+  <action name="actionEdit_Recipe">
+   <property name="text">
+    <string>Edit Recipe</string>
+   </property>
+  </action>
+  <action name="actionAbout_recpp">
+   <property name="text">
+    <string>About recpp</string>
    </property>
   </action>
  </widget>

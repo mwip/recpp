@@ -18,7 +18,9 @@
 
 #include "recpp.h"
 #include "ui_recpp.h"
+#include "ui_about.h"
 #include <QtDebug>
+#include <QDialog>
 #include <cookbook.h>
 
 static Cookbook *cookbook;
@@ -62,4 +64,12 @@ void recpp::on_actionNew_Cookbook_triggered()
 void recpp::on_actionOpen_Cookbook_triggered()
 {
 
+}
+
+void recpp::on_actionAbout_recpp_triggered()
+{
+    QDialog *about = new QDialog;
+    Ui::About ui;
+    ui.setupUi(about);
+    about->show();
 }

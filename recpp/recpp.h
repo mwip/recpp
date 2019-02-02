@@ -43,6 +43,8 @@ private slots:
 
     void on_actionOpen_Cookbook_triggered();
 
+    void on_actionAbout_recpp_triggered();
+
 private:
     Ui::recpp *ui;
 };
