@@ -7,24 +7,41 @@
 #include <sqlite3.h>
 #include "cookbook.h"
 
+/*
+    The Structure of a recpp sqlite the Following:
+
+    TABLE COOKBOOKS
+        COLUMNS |
+                |--ID
+                |--NAME
+                |--DESCRIPTION
+                |--COMMENT
+                |--RECIPESID
+                |--NUMRECIPES
+
+    TABLE RECIPES
+        COLUMNS |
+                |--ID
+                |--NAME
+                |--COMMENT
+                |--NUMPORTIONS
+                |--INGREDIENTS
+                |--INSTRUCTIONS
+                |--RATING
+                |--DIFFICULTY
+                |--PREPARATIONTIME
+                |--CUISINE
+*/
 
 class dbInteraction
 {
 private:
-    QString dbName;
+    const char *dbName;
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
     const char *sql;
-
-//    static int callback(void *NotUsed, int argc, char **argv, char **azColName){
-//       int i;
-//       for(i = 0; i<argc; i++) {
-//          printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-//       }
-//       printf("\n");
-//       return 0;
-//    }
+    sqlite3_stmt *stmt;
 
 public:
     dbInteraction();
@@ -33,9 +50,30 @@ public:
     // Getters
     QString getDbName();
     bool dbAccessible();
-    Cookbook parseSqlToCookbook(QString sqlReturn);
-    Cookbook loadCookbook();
+    Cookbook parseSqlToCookbook(const char *sqlReturn);
 
+
+    // setters
+
+    // Parse Database
+    std::vector<QString> listCookbooks(const char *dbFile);
+    Cookbook loadCookbook(QString name);
+    Recipe loadRecipe(const char *dbFile, int recipeId);
+    // todo: could help debugging
+    //std::vector<Cookbook> loadAllCookbooks();
+    //std::vector<Recipe> loadAllRecipes();
+
+
+
+
+
+    // initialize Database
+
+    void initializeDatabase(const char *fileName);
+
+    // conversion tools
+    QString getQStringFromUnsignedChar(const unsigned char *str);
+    const unsigned char* getUnsignedCharFromQString(QString qstr);
 
 };
 
