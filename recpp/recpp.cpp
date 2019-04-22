@@ -19,6 +19,7 @@
 #include "recpp.h"
 #include "ui_recpp.h"
 #include "ui_about.h"
+#include "include/dbinteraction.h"
 #include <QtDebug>
 #include <QDialog>
 #include <cookbook.h>
@@ -77,3 +78,20 @@ void recpp::on_actionAbout_recpp_triggered()
     ui.setupUi(about);
     about->show();
 }
+
+// Dummy Cookbook functions //
+
+void recpp::on_actionCreate_Dummy_Cookbook_triggered()
+{
+    qDebug() << "Creating new dummy recipe";
+    QString fileName = QFileDialog::getSaveFileName(this, "Create Cookbook", "",
+                                                    tr("Cookbook *.recpp, *.rectxt, *.recdb"));
+    const char *fn = fileName.toLocal8Bit().data();
+
+    dbInteraction *dbi = new dbInteraction(fn);
+    dbi->initializeDatabase();
+    dbi->createDummyRecipe();
+
+}
+
+// END Dummy Cookbook functions //

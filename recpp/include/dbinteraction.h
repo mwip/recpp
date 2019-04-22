@@ -38,13 +38,13 @@ class dbInteraction
 private:
     const char *dbName;
     sqlite3 *db;
-    char *zErrMsg = 0;
+    char *zErrMsg = nullptr;
     int rc;
-    const char *sql;
     sqlite3_stmt *stmt;
 
 public:
     dbInteraction();
+    dbInteraction(const char *fileName);
     ~dbInteraction();
 
     // Getters
@@ -54,6 +54,7 @@ public:
 
 
     // setters
+    void inputSqlToCookbook(const char *sqlQuery);
 
     // Parse Database
     std::vector<QString> listCookbooks(const char *dbFile);
@@ -68,12 +69,17 @@ public:
 
 
     // initialize Database
+    void initializeDatabase();
 
-    void initializeDatabase(const char *fileName);
+    // fill database with dummy recipe
+    void createDummyRecipe();
 
     // conversion tools
     QString getQStringFromUnsignedChar(const unsigned char *str);
     const unsigned char* getUnsignedCharFromQString(QString qstr);
+
+    // callback
+    static int callback(void *NotUsed, int argc, char **argv, char **azColName);
 
 };
 

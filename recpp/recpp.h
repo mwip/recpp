@@ -22,6 +22,7 @@
 #include <QMainWindow>
 //#include <QFile>
 #include <QFileDialog>
+#include "cookbook.h"
 
 
 namespace Ui {
@@ -44,6 +45,8 @@ private slots:
     void on_actionOpen_Cookbook_triggered();
 
     void on_actionAbout_recpp_triggered();
+
+    void on_actionCreate_Dummy_Cookbook_triggered();
 
 private:
     Ui::recpp *ui;

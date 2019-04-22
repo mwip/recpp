@@ -30,6 +30,7 @@
     <addaction name="actionNew_Cookbook"/>
     <addaction name="actionOpen_Cookbook"/>
     <addaction name="actionExit"/>
+    <addaction name="actionCreate_Dummy_Cookbook"/>
    </widget>
    <widget class="QMenu" name="menuRecipe">
     <property name="title">
@@ -91,6 +92,11 @@
   <action name="actionAbout_recpp">
    <property name="text">
     <string>About recpp</string>
+   </property>
+  </action>
+  <action name="actionCreate_Dummy_Cookbook">
+   <property name="text">
+    <string>Create Dummy Cookbook</string>
    </property>
   </action>
  </widget>

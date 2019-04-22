@@ -7,17 +7,24 @@
 #include <vector>
 #include <string>
 
+
+// Constructors
 dbInteraction::dbInteraction(){
 
 }
 
+dbInteraction::dbInteraction(const char *fileName){
+    this->dbName = fileName;
+}
+
+// Destructors
 dbInteraction::~dbInteraction(){
 
 }
 
 bool dbInteraction::dbAccessible(){
-    int rc = sqlite3_open(dbName, &db);
-    if (rc){
+    this->rc = sqlite3_open(dbName, &db);
+    if (this->rc){
         return false;
     } else {
         return true;
@@ -26,18 +33,20 @@ bool dbInteraction::dbAccessible(){
 
 std::vector<QString> dbInteraction::listCookbooks(const char *dbFile){
     std::vector<QString> cbNames;
-    rc = sqlite3_open(dbFile, &db);
+    const char *sql;
+
+    this->rc = sqlite3_open(dbFile, &db);
     sql = "SELECT NAME FROM COOKBOOKS";
 //    sqlite3_stmt *stmt;
 
-    if (rc){
+    if (this->rc){
         qDebug() << "Error opening database while listing Cookbooks";
     } else {
-        rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-        if (rc != SQLITE_OK){
+        this->rc = sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+        if (this->rc != SQLITE_OK){
             qDebug() << "Error opening data base with statement while listing Cookbooks";
         } else {
-            while ((rc = sqlite3_step(stmt)) == SQLITE_ROW){
+            while ((this->rc = sqlite3_step(stmt)) == SQLITE_ROW){
                 const unsigned char *name = sqlite3_column_text(stmt, 0);
                 QString qsName = getQStringFromUnsignedChar(name);
                 cbNames.push_back(qsName);
@@ -72,7 +81,9 @@ Cookbook dbInteraction::loadCookbook(QString name){
 // TODO
 Recipe dbInteraction::loadRecipe(const char *dbFile, int recipeId){
     Recipe *rec = new Recipe;
-    rc = sqlite3_open(dbFile, &db);
+    const char *sql;
+
+    this->rc = sqlite3_open(dbFile, &db);
     sql = "SELECT ID, NAME FROM RECIPES";
 //    sqlite3_stmt *stmt;
 
@@ -94,14 +105,11 @@ Recipe dbInteraction::loadRecipe(const char *dbFile, int recipeId){
     return *rec;
 }
 
-void dbInteraction::initializeDatabase(const char *fileName){
-    sqlite3 *db;
-    char *zErrMsg;
-    int rc;
+void dbInteraction::initializeDatabase(){
+    const char *sql;
 
-
-    rc = sqlite3_open(fileName, &db);
-    if (rc){
+    this->rc = sqlite3_open(this->dbName, &this->db);
+    if (this->rc){
         qDebug() << "Error opening database";
     } else {
         qDebug() << "Database sucessfully opened";
@@ -115,8 +123,8 @@ void dbInteraction::initializeDatabase(const char *fileName){
             "COMMENT     TEXT," \
             "RECIPESID   TEXT," \
             "NUMRECIPES  INT);";
-    rc = sqlite3_exec(db, sql, NULL, NULL, &zErrMsg);
-    if (rc != SQLITE_OK){
+    this->rc = sqlite3_exec(this->db, sql, nullptr, nullptr, &this->zErrMsg);
+    if (this->rc != SQLITE_OK){
         qDebug() << "Error creating COOKBOOKS table";
     } else {
         qDebug() << "Table COOKBOOKS successfully created";
@@ -134,14 +142,32 @@ void dbInteraction::initializeDatabase(const char *fileName){
             "DIFFICULTY      INT," \
             "PREPARATIONTIME INT," \
             "CUISINE         CHAR(50));";
-    rc = sqlite3_exec(db, sql, NULL, NULL, &zErrMsg);
-    if (rc != SQLITE_OK){
+    this->rc = sqlite3_exec(this->db, sql, nullptr, nullptr, &this->zErrMsg);
+    if (this->rc != SQLITE_OK){
         qDebug() << "Error creating RECIPES table";
     } else {
         qDebug() << "Table RECIPES successfully created";
     }
 
-    sqlite3_close(db);
+    sqlite3_close(this->db);
+}
+
+void dbInteraction::createDummyRecipe(){
+    const char *sql;
+
+    this->rc = sqlite3_open(this->dbName, &this->db);
+
+    sql = "INSERT INTO RECIPES (ID, NAME, COMMENT, INGREDIENTS, INSTRUCTIONS, " \
+                "RATING, DIFFICULTY, PREPARATIONTIME, CUISINE)" \
+              "VALUES (0, 'Recipe1', 'A comment on the recipe', '1;kg;joy;2;liter;beer'," \
+                "'drink beer and have the joy', 5, 1, 10, 'Bavarian');";
+
+    this->rc = sqlite3_exec(db, sql, this->callback, nullptr, &this->zErrMsg);
+    if (this->rc != SQLITE_OK){
+        qDebug() << "Error inserting dummy recipe";
+    } else {
+        qDebug() << "Dummy recipe successfully created";
+    }
 }
 
 
@@ -169,4 +195,13 @@ const unsigned char* dbInteraction::getUnsignedCharFromQString(QString qstr){
     return str;
 }
 
+
+int dbInteraction::callback(void *NotUsed, int argc, char **argv, char **azColName) {
+   int i;
+   for(i = 0; i<argc; i++) {
+      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+   }
+   printf("\n");
+   return 0;
+}
 
