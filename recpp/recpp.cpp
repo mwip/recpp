@@ -86,9 +86,9 @@ void recpp::on_actionCreate_Dummy_Cookbook_triggered()
     qDebug() << "Creating new dummy recipe";
     QString fileName = QFileDialog::getSaveFileName(this, "Create Cookbook", "",
                                                     tr("Cookbook *.recpp, *.rectxt, *.recdb"));
-    const char *fn = fileName.toLocal8Bit().data();
+//    const char *fn = fileName.toLocal8Bit().data();
 
-    dbInteraction *dbi = new dbInteraction(fn);
+    dbInteraction *dbi = new dbInteraction(fileName);
     dbi->initializeDatabase();
     dbi->createDummyRecipe();
 

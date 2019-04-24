@@ -2,13 +2,21 @@
 #define DBINTERACTION_H
 
 #include <QString>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sqlite3.h>
+#include <QtSql>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <sqlite3.h>
 #include "cookbook.h"
 
 /*
     The Structure of a recpp sqlite the Following:
+
+    TABLE META
+        COLUMNS |
+                |--CDATE
+                |--NAME
+                |--DESCRIPTION
+                |--VERSION
 
     TABLE COOKBOOKS
         COLUMNS |
@@ -36,30 +44,28 @@
 class dbInteraction
 {
 private:
-    const char *dbName;
-    sqlite3 *db;
-    char *zErrMsg = nullptr;
-    int rc;
-    sqlite3_stmt *stmt;
+    QString dbName;
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+
+
 
 public:
-    dbInteraction();
-    dbInteraction(const char *fileName);
+//    dbInteraction();
+    dbInteraction(QString dbname);
     ~dbInteraction();
 
     // Getters
     QString getDbName();
     bool dbAccessible();
-    Cookbook parseSqlToCookbook(const char *sqlReturn);
-
+//    Cookbook parseSqlToCookbook(const char *sqlReturn);
 
     // setters
-    void inputSqlToCookbook(const char *sqlQuery);
+//    void inputSqlToCookbook(const char *sqlQuery);
 
     // Parse Database
-    std::vector<QString> listCookbooks(const char *dbFile);
-    Cookbook loadCookbook(QString name);
-    Recipe loadRecipe(const char *dbFile, int recipeId);
+//    std::vector<QString> listCookbooks(const char *dbFile);
+//    Cookbook loadCookbook(QString name);
+//    Recipe loadRecipe(const char *dbFile, int recipeId);
     // todo: could help debugging
     //std::vector<Cookbook> loadAllCookbooks();
     //std::vector<Recipe> loadAllRecipes();
@@ -74,12 +80,8 @@ public:
     // fill database with dummy recipe
     void createDummyRecipe();
 
-    // conversion tools
-    QString getQStringFromUnsignedChar(const unsigned char *str);
-    const unsigned char* getUnsignedCharFromQString(QString qstr);
-
     // callback
-    static int callback(void *NotUsed, int argc, char **argv, char **azColName);
+//    static int callback(void *NotUsed, int argc, char **argv, char **azColName);
 
 };
 
