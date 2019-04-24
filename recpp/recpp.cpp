@@ -57,9 +57,12 @@ void recpp::on_actionNew_Cookbook_triggered()
             fi.suffix() != "rectxt") {
         fileName += ".recpp";
     }
-    //qDebug() << fileName << "\n";
 
-    Cookbook *cookbook = new Cookbook(name, description, comment, fileName);
+    // initialize the data base
+    dbInteraction *dbi = new dbInteraction(fileName);
+    dbi->initializeDatabase();
+
+//    Cookbook *cookbook = new Cookbook(name, description, comment, fileName);
 }
 
 void recpp::on_actionOpen_Cookbook_triggered()
