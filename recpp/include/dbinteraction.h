@@ -3,9 +3,6 @@
 
 #include <QString>
 #include <QtSql>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <sqlite3.h>
 #include "cookbook.h"
 
 /*
@@ -18,13 +15,13 @@
                 |--DESCRIPTION
                 |--VERSION
 
-    TABLE COOKBOOKS
+    TABLE COOKBOOK
         COLUMNS |
                 |--ID
                 |--NAME
                 |--DESCRIPTION
                 |--COMMENT
-                |--RECIPESID
+                |--RECIPEID
                 |--NUMRECIPES
 
     TABLE RECIPES
@@ -56,32 +53,14 @@ public:
 
     // Getters
     QString getDbName();
-    bool dbAccessible();
-//    Cookbook parseSqlToCookbook(const char *sqlReturn);
-
-    // setters
-//    void inputSqlToCookbook(const char *sqlQuery);
-
-    // Parse Database
-//    std::vector<QString> listCookbooks(const char *dbFile);
-//    Cookbook loadCookbook(QString name);
-//    Recipe loadRecipe(const char *dbFile, int recipeId);
-    // todo: could help debugging
-    //std::vector<Cookbook> loadAllCookbooks();
-    //std::vector<Recipe> loadAllRecipes();
-
-
-
-
+    QSqlQueryModel * getQueryModel();
+    bool isAccessible();
 
     // initialize Database
     void initializeDatabase();
 
     // fill database with dummy recipe
     void createDummyRecipe();
-
-    // callback
-//    static int callback(void *NotUsed, int argc, char **argv, char **azColName);
 
 };
 

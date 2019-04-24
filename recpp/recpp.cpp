@@ -22,21 +22,25 @@
 #include "include/dbinteraction.h"
 #include <QtDebug>
 #include <QDialog>
-#include <cookbook.h>
+#include "cookbook.h"
 
-static Cookbook *cookbook;
+static Cookbook *cookbook = new Cookbook();
 
 recpp::recpp(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::recpp)
 {
     ui->setupUi(this);
+    ui->labelCurrentCookBook->setText("No cookbook chosen yet.");
+
 }
 
 recpp::~recpp()
 {
     delete ui;
 }
+
+// Menu items
 
 void recpp::on_actionExit_triggered()
 {
@@ -62,15 +66,26 @@ void recpp::on_actionNew_Cookbook_triggered()
     dbInteraction *dbi = new dbInteraction(fileName);
     dbi->initializeDatabase();
 
-//    Cookbook *cookbook = new Cookbook(name, description, comment, fileName);
+    // display the current data base name on screen
+    ui->labelCurrentCookBook->setText(cookbook->getFileName());
+    // activate load cookbook button
+    ui->buttonLoadCookbook->setEnabled(true);
+
 }
 
 void recpp::on_actionOpen_Cookbook_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this, "Open Cookbook", "",
                                                     tr("Cookbook *.recpp, *.rectxt, *.recdb"));
-    Cookbook *cookbook = new Cookbook;
-    cookbook->loadFromFile(fileName);
+
+    if (fileName != ""){
+        cookbook->loadFromFile(fileName);
+
+        // display the current data base name on screen
+        ui->labelCurrentCookBook->setText(cookbook->getFileName());
+        // activate load cookbook button
+        ui->buttonLoadCookbook->setEnabled(true);
+    }
 
 }
 
@@ -82,19 +97,54 @@ void recpp::on_actionAbout_recpp_triggered()
     about->show();
 }
 
-// Dummy Cookbook functions //
-
 void recpp::on_actionCreate_Dummy_Cookbook_triggered()
 {
     qDebug() << "Creating new dummy recipe";
     QString fileName = QFileDialog::getSaveFileName(this, "Create Cookbook", "",
                                                     tr("Cookbook *.recpp, *.rectxt, *.recdb"));
-//    const char *fn = fileName.toLocal8Bit().data();
+    if (fileName != ""){
+        dbInteraction *dbi = new dbInteraction(fileName);
+        dbi->initializeDatabase();
+        dbi->createDummyRecipe();
 
-    dbInteraction *dbi = new dbInteraction(fileName);
-    dbi->initializeDatabase();
-    dbi->createDummyRecipe();
+        cookbook->loadFromFile(fileName);
+
+        // display the current data base name on screen
+        ui->labelCurrentCookBook->setText(cookbook->getFileName());
+        // activate load cookbook button
+        ui->buttonLoadCookbook->setEnabled(true);
+    }
 
 }
 
-// END Dummy Cookbook functions //
+
+
+// Push buttons
+void recpp::on_buttonOpenCookbook_clicked()
+{
+    // same as recpp::on_actionOpen_Cookbook_triggered()
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Cookbook", "",
+                                                    tr("Cookbook *.recpp, *.rectxt, *.recdb"));
+    if (fileName != ""){
+        cookbook->loadFromFile(fileName);
+
+        // display the current data base name on screen
+        ui->labelCurrentCookBook->setText(cookbook->getFileName());
+        // activate load cookbook button
+        ui->buttonLoadCookbook->setEnabled(true);
+    }
+
+}
+
+void recpp::on_buttonLoadCookbook_clicked()
+{
+    QString dbFile = cookbook->getFileName();
+    dbInteraction * db = new dbInteraction(dbFile);
+
+    QSqlQueryModel * model = db->getQueryModel();
+
+    ui->tableView->setModel(model);
+    ui->tableView->show();
+}
+
+

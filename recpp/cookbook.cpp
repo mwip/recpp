@@ -16,7 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>
 */
 
-#include <cookbook.h>
+#include "cookbook.h"
+#include "include/dbinteraction.h"
 
 // Constructors
 Cookbook::Cookbook(){
@@ -98,7 +99,14 @@ void Cookbook::updateNumberOfRecipes(){
 
 // load Functions
 void Cookbook::loadFromFile(QString fileName){
-    this->fileName = fileName;
+    // connect to data base
+    dbInteraction * db = new dbInteraction(this->fileName);
+
+    // if access is possible assign the data base
+    if (db->isAccessible()){
+        this->setFileName(fileName);
+    }
+
 
 }
 

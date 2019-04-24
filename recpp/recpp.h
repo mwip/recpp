@@ -48,6 +48,11 @@ private slots:
 
     void on_actionCreate_Dummy_Cookbook_triggered();
 
+    void on_buttonOpenCookbook_clicked();
+
+    void on_buttonLoadCookbook_clicked();
+
+
 private:
     Ui::recpp *ui;
 };

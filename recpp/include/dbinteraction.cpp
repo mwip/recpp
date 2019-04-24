@@ -20,6 +20,22 @@ dbInteraction::~dbInteraction(){
 
 }
 
+// Getters
+QString dbInteraction::getDbName(){
+    return(this->dbName);
+}
+
+bool dbInteraction::isAccessible(){
+    if (this->db.open()){
+        this->db.close();
+        return(true);
+    } else {
+        return(false);
+    }
+}
+
+
+// Setters
 void dbInteraction::initializeDatabase(){
     // initialize a database from scratch
     // creates required tables
@@ -39,12 +55,11 @@ void dbInteraction::initializeDatabase(){
                         "VERSION      TEXT);");
 
         // initiate table COOKBOOKS
-        query.exec("CREATE TABLE COOKBOOKS(" \
+        query.exec("CREATE TABLE COOKBOOK(" \
                    "ID          INT PRIMARY KEY NOT NULL," \
                    "NAME        TEXT NOT NULL," \
                    "DESCRIPTION TEXT," \
                    "COMMENT     TEXT," \
-                   "RECIPESID   TEXT," \
                    "NUMRECIPES  INT);");
 
         // initiate table RECIPES
@@ -76,11 +91,17 @@ void dbInteraction::createDummyRecipe(){
         qDebug() << "Data base opened successfully";
 
         QSqlQuery query;
+        // add dummy cookbook
+        query.exec("INSERT INTO COOKBOOK (ID, NAME, DESCRIPTION, COMMENT, NUMRECIPES)" \
+                   "VALUES (0, 'Recipe1', 'A description on the recipe', 'A comment on the recipe', 1);");
+        qDebug() << "Error when inserting into cookbook" << query.lastError();
 
+        // add dummy recipe
         query.exec("INSERT INTO RECIPES (ID, NAME, COMMENT, INGREDIENTS, INSTRUCTIONS, " \
                    "RATING, DIFFICULTY, PREPARATIONTIME, CUISINE)" \
                    "VALUES (0, 'Recipe1', 'A comment on the recipe', '1;kg;joy;2;liter;beer'," \
                    "'drink beer and have the joy', 5, 1, 10, 'Bavarian');");
+        qDebug() << "Error when inserting into recipes" << query.lastError();
 
         this->db.close();
         qDebug() << "Data base closed successfully";
@@ -88,4 +109,27 @@ void dbInteraction::createDummyRecipe(){
         qDebug() << "Error opening data base: " << db.lastError().text();
     }
 }
+
+QSqlQueryModel * dbInteraction::getQueryModel(){
+
+    if(this->db.open()){
+        qDebug() << "Successfully opened data base for reading queryModel";
+
+        // create the return model
+        QSqlQueryModel * model = new QSqlQueryModel();
+
+        // initialize the query
+        QSqlQuery * query = new QSqlQuery(this->db);
+        query->prepare("select * from COOKBOOK;");
+        query->exec();
+
+        model->setQuery(*query);
+        this->db.close();
+        return(model);
+    } else {
+        qDebug() << "Error opening data base for reading queryModel";
+        return(nullptr);
+    }
+}
+
 
