@@ -1,3 +1,21 @@
+/*
+    recpp - A digital cookbook for managing your recipes.
+    Copyright (C) 2018 Matthias Weigand -- matthias.weigand[at]protonmail.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>
+*/
+
 #include "dbinteraction.h"
 #include "cookbook.h"
 #include <QtSql>
@@ -36,6 +54,38 @@ bool dbInteraction::isAccessible(){
 
 
 // Setters
+void dbInteraction::addRecipe(QString name, QString comment, int numPortions,
+                              QString ingredients, QString instructions,
+                              int rating, int preparationTime, QString cuisine){
+    QSqlQuery query;
+
+    if (this->db.open()){
+        query.prepare("INSERT INTO RECIPES (NAME, COMMENT, NUMPORTIONS, "
+                      "INGREDIENTS, INSTRUCTIONS, RATING, PREPARATIONTIME, "
+                      "CUISINE) "
+                      "VALUES (:name, :comment, :numportions, :ingredients, "
+                      ":instructions, :rating, :preparationtime, :cuisine");
+        query.bindValue(":name", name);
+        query.bindValue(":comment", comment);
+        query.bindValue(":numportions", numPortions);
+        query.bindValue(":ingredients", ingredients);
+        query.bindValue(":instructions", instructions);
+        query.bindValue(":rating", rating);
+        query.bindValue(":preparationtime", preparationTime);
+        query.bindValue(":cuisine", cuisine);
+        query.exec();
+
+        this->db.close();
+        qDebug() << "Sucessfully added recipe: " << name;
+
+    } else {
+        qDebug() << "Error writing recipe " << name << " to data base";
+    }
+
+
+
+}
+
 void dbInteraction::initializeDatabase(){
     // initialize a database from scratch
     // creates required tables
