@@ -15,6 +15,16 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="1">
+     <widget class="QPushButton" name="buttonLoadCookbook">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Load Cookbook</string>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="3">
      <widget class="QTableView" name="tableView"/>
     </item>
@@ -28,13 +38,10 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="buttonLoadCookbook">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="pushButton">
       <property name="text">
-       <string>Load Cookbook</string>
+       <string>Add Recipe</string>
       </property>
      </widget>
     </item>

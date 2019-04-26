@@ -126,10 +126,11 @@ void recpp::on_actionAdd_Recipe_triggered()
     QString dbname = ui->labelCurrentCookBook->text();
 
     if (dbname != "No cookbook chosen yet."){
+
         // if a cookbook was loaded procede with new widget
-        rcp = new newRecipe(this); // https://invidio.us/watch?v=wUH_gu2HdQE
+        rcp = new newRecipe(this, cookbook); // https://invidio.us/watch?v=wUH_gu2HdQE
         rcp->show();
-//        rcp->show();
+
     } else {
         // if no cookbook was loaded yet, throw a warning
         QMessageBox::warning(this, "No Cookbook",
@@ -170,3 +171,21 @@ void recpp::on_buttonLoadCookbook_clicked()
 
 
 
+
+void recpp::on_pushButton_clicked()
+{
+
+    // check whether a cookbook was loaded
+    QString dbname = ui->labelCurrentCookBook->text();
+
+    if (dbname != "No cookbook chosen yet."){
+        // if a cookbook was loaded procede with new widget
+        rcp = new newRecipe(this, cookbook); // https://invidio.us/watch?v=wUH_gu2HdQE
+        rcp->show();
+        //        rcp->show();
+    } else {
+        // if no cookbook was loaded yet, throw a warning
+        QMessageBox::warning(this, "No Cookbook",
+                             "Please load a cookbook first.");
+    }
+}

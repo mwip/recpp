@@ -53,6 +53,8 @@ private slots:
 
     void on_actionAdd_Recipe_triggered();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::recpp *ui;
     newRecipe *rcp; // https://invidio.us/watch?v=wUH_gu2HdQE
