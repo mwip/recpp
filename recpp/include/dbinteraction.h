@@ -77,7 +77,7 @@ public:
     // Setters
     void addRecipe(QString name, QString comment, int numPortions,
                    QString ingredients, QString instructions, int rating,
-                   int preparationTime, QString cuisine);
+                   int preparationTime, int difficulty, QString cuisine);
 
     // initialize Database
     void initializeDatabase();

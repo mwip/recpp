@@ -56,15 +56,17 @@ bool dbInteraction::isAccessible(){
 // Setters
 void dbInteraction::addRecipe(QString name, QString comment, int numPortions,
                               QString ingredients, QString instructions,
-                              int rating, int preparationTime, QString cuisine){
+                              int rating, int preparationTime, int difficulty,
+                              QString cuisine){
     QSqlQuery query;
 
     if (this->db.open()){
         query.prepare("INSERT INTO RECIPES (NAME, COMMENT, NUMPORTIONS, "
                       "INGREDIENTS, INSTRUCTIONS, RATING, PREPARATIONTIME, "
-                      "CUISINE) "
+                      "DIFFICULTY, CUISINE) "
                       "VALUES (:name, :comment, :numportions, :ingredients, "
-                      ":instructions, :rating, :preparationtime, :cuisine");
+                      ":instructions, :rating, :preparationtime, :difficulty, "
+                      ":cuisine);");
         query.bindValue(":name", name);
         query.bindValue(":comment", comment);
         query.bindValue(":numportions", numPortions);
@@ -72,11 +74,14 @@ void dbInteraction::addRecipe(QString name, QString comment, int numPortions,
         query.bindValue(":instructions", instructions);
         query.bindValue(":rating", rating);
         query.bindValue(":preparationtime", preparationTime);
+        query.bindValue(":difficulty", difficulty);
         query.bindValue(":cuisine", cuisine);
+//        qDebug() << query;
         query.exec();
+        qDebug() << "Error when inserting into cookbook" << query.lastError();
 
         this->db.close();
-        qDebug() << "Sucessfully added recipe: " << name;
+//        qDebug() << "Sucessfully added recipe: " << name;
 
     } else {
         qDebug() << "Error writing recipe " << name << " to data base";
@@ -106,7 +111,7 @@ void dbInteraction::initializeDatabase(){
 
         // initiate table COOKBOOKS
         query.exec("CREATE TABLE COOKBOOK(" \
-                   "ID          INT PRIMARY KEY NOT NULL," \
+                   /*"ID          INT PRIMARY KEY IDENTITY," \*/
                    "NAME        TEXT NOT NULL," \
                    "DESCRIPTION TEXT," \
                    "COMMENT     TEXT," \
@@ -114,7 +119,7 @@ void dbInteraction::initializeDatabase(){
 
         // initiate table RECIPES
         query.exec("CREATE TABLE RECIPES(" \
-                   "ID              INT PRIMARY KEY NOT NULL," \
+                   /*"ID              INT PRIMARY KEY IDENTITY," \*/
                    "NAME            TEXT NOT NULL," \
                    "COMMENT         TEXT," \
                    "NUMPORTIONS     INT," \
@@ -142,14 +147,14 @@ void dbInteraction::createDummyRecipe(){
 
         QSqlQuery query;
         // add dummy cookbook
-        query.exec("INSERT INTO COOKBOOK (ID, NAME, DESCRIPTION, COMMENT, NUMRECIPES)" \
-                   "VALUES (0, 'Recipe1', 'A description on the recipe', 'A comment on the recipe', 1);");
+        query.exec("INSERT INTO COOKBOOK (NAME, DESCRIPTION, COMMENT, NUMRECIPES)" \
+                   "VALUES ('Recipe1', 'A description on the recipe', 'A comment on the recipe', 1);");
         qDebug() << "Error when inserting into cookbook" << query.lastError();
 
         // add dummy recipe
-        query.exec("INSERT INTO RECIPES (ID, NAME, COMMENT, INGREDIENTS, INSTRUCTIONS, " \
+        query.exec("INSERT INTO RECIPES (NAME, COMMENT, INGREDIENTS, INSTRUCTIONS, " \
                    "RATING, DIFFICULTY, PREPARATIONTIME, CUISINE)" \
-                   "VALUES (0, 'Recipe1', 'A comment on the recipe', '1;kg;joy;2;liter;beer'," \
+                   "VALUES ('Recipe1', 'A comment on the recipe', '1;kg;joy;2;liter;beer'," \
                    "'drink beer and have the joy', 5, 1, 10, 'Bavarian');");
         qDebug() << "Error when inserting into recipes" << query.lastError();
 
