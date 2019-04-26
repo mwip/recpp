@@ -56,6 +56,7 @@
     <addaction name="actionNew_Cookbook"/>
     <addaction name="actionOpen_Cookbook"/>
     <addaction name="actionExit"/>
+    <addaction name="separator"/>
     <addaction name="actionCreate_Dummy_Cookbook"/>
    </widget>
    <widget class="QMenu" name="menuRecipe">
@@ -65,6 +66,8 @@
     <addaction name="actionAdd_Recipe"/>
     <addaction name="actionEdit_Recipe"/>
     <addaction name="actionRemove_Recipe"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdd_Dummy_Recipe"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -123,6 +126,11 @@
   <action name="actionCreate_Dummy_Cookbook">
    <property name="text">
     <string>Create Dummy Cookbook</string>
+   </property>
+  </action>
+  <action name="actionAdd_Dummy_Recipe">
+   <property name="text">
+    <string>Add Dummy Recipe</string>
    </property>
   </action>
  </widget>

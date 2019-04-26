@@ -53,7 +53,8 @@ HEADERS += \
 
 FORMS += \
         recpp.ui \
-    ui/about.ui
+    ui/about.ui \
+    ui/addrecipe.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

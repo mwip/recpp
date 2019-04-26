@@ -53,6 +53,8 @@ private slots:
     void on_buttonLoadCookbook_clicked();
 
 
+    void on_actionAdd_Recipe_triggered();
+
 private:
     Ui::recpp *ui;
 };

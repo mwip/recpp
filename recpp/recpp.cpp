@@ -19,9 +19,11 @@
 #include "recpp.h"
 #include "ui_recpp.h"
 #include "ui_about.h"
+#include "ui_addrecipe.h"
 #include "include/dbinteraction.h"
 #include <QtDebug>
 #include <QDialog>
+#include <QMessageBox>
 #include "cookbook.h"
 
 static Cookbook *cookbook = new Cookbook();
@@ -92,8 +94,8 @@ void recpp::on_actionOpen_Cookbook_triggered()
 void recpp::on_actionAbout_recpp_triggered()
 {
     QDialog *about = new QDialog;
-    Ui::About ui;
-    ui.setupUi(about);
+    Ui::About abt;
+    abt.setupUi(about);
     about->show();
 }
 
@@ -114,6 +116,21 @@ void recpp::on_actionCreate_Dummy_Cookbook_triggered()
         // activate load cookbook button
         ui->buttonLoadCookbook->setEnabled(true);
     }
+}
+
+void recpp::on_actionAdd_Recipe_triggered()
+{
+    QString dbname = ui->labelCurrentCookBook->text();
+    if (dbname != "No cookbook chosen yet."){
+        QWidget *newrecipe = new QWidget;
+        Ui::addRecipe nrc;
+        nrc.setupUi(newrecipe);
+        newrecipe->show();
+    } else {
+        QMessageBox::warning(this, "No Cookbook",
+                             "Please load a cookbook first.");
+    }
+
 
 }
 
@@ -146,5 +163,7 @@ void recpp::on_buttonLoadCookbook_clicked()
     ui->tableView->setModel(model);
     ui->tableView->show();
 }
+
+
 
 
