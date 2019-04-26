@@ -38,6 +38,7 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
+    newrecipe.cpp \
         recpp.cpp \
         cookbook.cpp \
         recipe.cpp \
@@ -45,6 +46,7 @@ SOURCES += \
     include/dbinteraction.cpp
 
 HEADERS += \
+    newrecipe.h \
         recpp.h \
         cookbook.h \
         recipe.h \
@@ -52,9 +54,9 @@ HEADERS += \
     include/dbinteraction.h
 
 FORMS += \
+    newrecipe.ui \
         recpp.ui \
-    ui/about.ui \
-    ui/addrecipe.ui
+    ui/about.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

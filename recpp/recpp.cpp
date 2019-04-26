@@ -19,12 +19,14 @@
 #include "recpp.h"
 #include "ui_recpp.h"
 #include "ui_about.h"
-#include "ui_addrecipe.h"
+#include "ui_newrecipe.h"
 #include "include/dbinteraction.h"
+#include "cookbook.h"
+#include "newrecipe.h"
 #include <QtDebug>
 #include <QDialog>
 #include <QMessageBox>
-#include "cookbook.h"
+
 
 static Cookbook *cookbook = new Cookbook();
 
@@ -120,18 +122,19 @@ void recpp::on_actionCreate_Dummy_Cookbook_triggered()
 
 void recpp::on_actionAdd_Recipe_triggered()
 {
+    // check whether a cookbook was loaded
     QString dbname = ui->labelCurrentCookBook->text();
+
     if (dbname != "No cookbook chosen yet."){
-        QWidget *newrecipe = new QWidget;
-        Ui::addRecipe nrc;
-        nrc.setupUi(newrecipe);
-        newrecipe->show();
+        // if a cookbook was loaded procede with new widget
+        rcp = new newRecipe(this); // https://invidio.us/watch?v=wUH_gu2HdQE
+        rcp->show();
+//        rcp->show();
     } else {
+        // if no cookbook was loaded yet, throw a warning
         QMessageBox::warning(this, "No Cookbook",
                              "Please load a cookbook first.");
     }
-
-
 }
 
 

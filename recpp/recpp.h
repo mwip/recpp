@@ -20,9 +20,8 @@
 #define RECPP_H
 
 #include <QMainWindow>
-//#include <QFile>
 #include <QFileDialog>
-#include "cookbook.h"
+#include "newrecipe.h"
 
 
 namespace Ui {
@@ -52,11 +51,11 @@ private slots:
 
     void on_buttonLoadCookbook_clicked();
 
-
     void on_actionAdd_Recipe_triggered();
 
 private:
     Ui::recpp *ui;
+    newRecipe *rcp; // https://invidio.us/watch?v=wUH_gu2HdQE
 };
 
 #endif // RECPP_H
